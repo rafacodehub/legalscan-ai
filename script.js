@@ -1557,24 +1557,7 @@ function showLoadingSteps(callback) {
 V11 PREMIUM UX
 ========================= */
 
-function premiumToast(title, subtitle = "") {
-  const toast = document.getElementById("toast");
 
-  toast.innerHTML = `
-    <div class="toast-title">${title}</div>
-    <div class="toast-subtitle">${subtitle}</div>
-  `;
-
-  toast.classList.add("show");
-
-  clearTimeout(window.toastTimeout);
-
-  window.toastTimeout = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 3400);
-}
-
-window.showToast = premiumToast;
 
 /* transition between pages */
 
@@ -1600,3 +1583,30 @@ switchPage = function(pageId) {
 };
 
 
+/* MOBILE FIX V12: compact toast and clickable mobile */
+window.showToast = function(message, subtitle = "") {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  toast.innerHTML = subtitle
+    ? `<strong>${message}</strong><br><span>${subtitle}</span>`
+    : `<span>${message}</span>`;
+
+  toast.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
+};
+
+/* Ensure hidden modals never block mobile clicks */
+document.querySelectorAll(".modal").forEach((modal) => {
+  const updatePointer = () => {
+    modal.style.pointerEvents = modal.classList.contains("active") ? "auto" : "none";
+  };
+  updatePointer();
+  new MutationObserver(updatePointer).observe(modal, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+});
