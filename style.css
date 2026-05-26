@@ -1919,45 +1919,6 @@ body::after {
   50% { opacity: .4; }
 }
 
-/* premium toasts */
-
-.toast {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 999;
-  min-width: 320px;
-  max-width: 420px;
-  padding: 18px 22px;
-  border-radius: 22px;
-  background: rgba(15,23,42,.72);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,.08);
-  color: white;
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.05);
-  transform: translateX(140%);
-  opacity: 0;
-  transition: all .45s cubic-bezier(.19,1,.22,1);
-}
-
-.toast.show {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.toast-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.toast-subtitle {
-  font-size: 13px;
-  color: #cbd5e1;
-}
-
 /* hover glow */
 
 .panel:hover,
@@ -2032,39 +1993,39 @@ body::after {
   }
 }
 
-/* ================= MOBILE RESPONSIVE FIX V12 ================= */
 
 html {
   zoom: 1 !important;
 }
 
 body {
-  display: block !important;
   width: 100% !important;
+  max-width: 100% !important;
   overflow-x: hidden !important;
 }
 
-/* Compact toast: no fullscreen notifications */
 .toast {
   position: fixed !important;
-  right: 14px !important;
-  bottom: 92px !important;
   top: auto !important;
   left: auto !important;
+  right: 14px !important;
+  bottom: 92px !important;
   width: auto !important;
-  min-width: 220px !important;
+  min-width: 210px !important;
   max-width: calc(100vw - 28px) !important;
   padding: 12px 14px !important;
   border-radius: 14px !important;
   background: rgba(15, 23, 42, .96) !important;
   border: 1px solid var(--border) !important;
   color: white !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, .35) !important;
   backdrop-filter: none !important;
-  font-size: 13px !important;
-  transform: translateY(18px) !important;
+  transform: translateY(16px) !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  z-index: 9999 !important;
+  z-index: 99999 !important;
+  font-size: 13px !important;
+  line-height: 1.35 !important;
   transition: .25s ease !important;
 }
 
@@ -2073,7 +2034,13 @@ body {
   opacity: 1 !important;
 }
 
-/* Hidden modals must not block taps */
+.toast-title,
+.toast-subtitle {
+  display: inline !important;
+  font-size: 13px !important;
+  margin: 0 !important;
+}
+
 .modal:not(.active),
 .loading-overlay:not(.active) {
   display: none !important;
@@ -2095,16 +2062,18 @@ input {
 
 @media (max-width: 900px) {
   body {
-    padding-bottom: 92px !important;
+    display: block !important;
+    padding-bottom: 96px !important;
   }
 
   .sidebar {
+    position: relative !important;
     width: 100% !important;
     min-height: auto !important;
-    position: relative !important;
     padding: 14px 12px 8px !important;
     border-right: 0 !important;
     border-bottom: 1px solid var(--border) !important;
+    gap: 12px !important;
   }
 
   .brand,
@@ -2116,7 +2085,7 @@ input {
 
   .brand h1,
   .brand-text-only h1 {
-    font-size: 26px !important;
+    font-size: 25px !important;
   }
 
   .upgrade {
@@ -2138,21 +2107,23 @@ input {
     width: 100% !important;
     max-width: 360px !important;
     margin: 10px auto !important;
-    z-index: 200 !important;
+    z-index: 1200 !important;
   }
 
   .app {
-    width: 100% !important;
-    padding: 12px !important;
-    min-height: auto !important;
     display: block !important;
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 12px !important;
+    padding-bottom: 108px !important;
   }
 
   .topbar {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 12px !important;
-    margin-bottom: 12px !important;
+    align-items: stretch !important;
+    margin-bottom: 14px !important;
   }
 
   .warning {
@@ -2161,6 +2132,8 @@ input {
     padding: 12px !important;
     font-size: 13px !important;
     align-items: flex-start !important;
+    background: rgba(148, 163, 184, .08) !important;
+    border-color: rgba(148, 163, 184, .20) !important;
   }
 
   .warning p {
@@ -2180,6 +2153,13 @@ input {
     width: 100% !important;
   }
 
+  .page {
+    display: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
   .page.active {
     display: block !important;
     opacity: 1 !important;
@@ -2196,6 +2176,7 @@ input {
     display: grid !important;
     grid-template-columns: 1fr !important;
     width: 100% !important;
+    max-width: 100% !important;
     gap: 14px !important;
   }
 
@@ -2204,7 +2185,8 @@ input {
   .page-card,
   .template-card,
   .welcome-hero,
-  .quick-card {
+  .quick-card,
+  .results-area {
     width: 100% !important;
     max-width: 100% !important;
     padding: 16px !important;
@@ -2212,8 +2194,22 @@ input {
     overflow: visible !important;
   }
 
+  .welcome-shell {
+    min-height: auto !important;
+    display: grid !important;
+    gap: 16px !important;
+    padding: 8px 0 18px !important;
+  }
+
+  .welcome-hero h2 {
+    font-size: 34px !important;
+    line-height: 1 !important;
+  }
+
   .upload-box {
-    min-height: 190px !important;
+    min-height: 185px !important;
+    width: 100% !important;
+    cursor: pointer !important;
   }
 
   textarea {
@@ -2246,6 +2242,7 @@ input {
 
   .table-wrap {
     width: 100% !important;
+    max-width: 100% !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
@@ -2259,6 +2256,7 @@ input {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 10px !important;
+    width: 100% !important;
   }
 
   .settings-tab,
@@ -2266,14 +2264,13 @@ input {
     width: 100% !important;
   }
 
-  /* Bottom app navigation */
   .menu {
     position: fixed !important;
     left: 8px !important;
     right: 8px !important;
     bottom: 8px !important;
     width: auto !important;
-    z-index: 800 !important;
+    z-index: 9000 !important;
     display: grid !important;
     grid-template-columns: repeat(5, 1fr) !important;
     gap: 4px !important;
@@ -2282,6 +2279,7 @@ input {
     background: rgba(2, 6, 23, .94) !important;
     border: 1px solid var(--border) !important;
     backdrop-filter: blur(14px) !important;
+    box-shadow: 0 18px 65px rgba(0, 0, 0, .45) !important;
   }
 
   .menu-item {
@@ -2318,7 +2316,7 @@ input {
     padding: 12px !important;
     align-items: center !important;
     justify-content: center !important;
-    z-index: 5000 !important;
+    z-index: 10000 !important;
   }
 
   .modal-card,
@@ -2334,8 +2332,15 @@ input {
     border-radius: 22px !important;
   }
 
+  .modal-close {
+    position: sticky !important;
+    top: 0 !important;
+    margin-left: auto !important;
+    z-index: 3 !important;
+  }
+
   .onboarding-slide h2 {
-    font-size: 32px !important;
+    font-size: 31px !important;
   }
 
   .onboarding-actions,
@@ -2371,7 +2376,7 @@ input {
 @media (max-width: 430px) {
   .brand h1,
   .brand-text-only h1 {
-    font-size: 24px !important;
+    font-size: 23px !important;
   }
 
   .menu-item {
@@ -2382,7 +2387,9 @@ input {
     max-width: 54px !important;
   }
 
-  .welcome-hero h2 {
-    font-size: 32px !important;
+  .panel h2,
+  .results-header h2,
+  .page-card h2 {
+    font-size: 20px !important;
   }
 }

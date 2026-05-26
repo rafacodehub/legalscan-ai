@@ -1497,19 +1497,10 @@ document.querySelectorAll(".plan-option").forEach((option) => {
 
 syncPlanEverywhere(localStorage.getItem("legalscan-plan") || "Plano Gratuito");
 
-/* Onboarding must always appear whenever index.html opens */
-window.addEventListener("load", () => {
-  const onboarding = document.getElementById("onboardingModal");
-  if (onboarding) {
-    onboarding.classList.add("active");
-    onboardingIndex = 0;
-    renderOnboarding();
-  }
-});
-
 /* Do not permanently suppress onboarding in this version */
 function closeOnboarding() {
   onboardingModal.classList.remove("active");
+  localStorage.setItem("legalscan-onboarding", "done");
   setLoggedInUI();
   showToast("Conta Rafacodehub ativada.");
 }
@@ -1583,7 +1574,7 @@ switchPage = function(pageId) {
 };
 
 
-/* MOBILE FIX V12: compact toast and clickable mobile */
+
 window.showToast = function(message, subtitle = "") {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -1599,14 +1590,61 @@ window.showToast = function(message, subtitle = "") {
   }, 2200);
 };
 
-/* Ensure hidden modals never block mobile clicks */
+switchPage = function(page) {
+  document.querySelectorAll(".page").forEach((section) => section.classList.remove("active"));
+  document.querySelectorAll(".menu-item").forEach((item) => item.classList.remove("active"));
+
+  const normalized = page === "new" ? "dashboard" : page;
+  const target = document.getElementById(`${normalized}Page`);
+
+  if (target) target.classList.add("active");
+
+  const menu = document.querySelector(`.menu-item[data-page="${normalized}"]`);
+  if (menu) menu.classList.add("active");
+
+  if (page === "new") {
+    resetAnalysis();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  if (page === "history") renderHistory();
+  if (page === "reports") renderReports();
+};
+
 document.querySelectorAll(".modal").forEach((modal) => {
   const updatePointer = () => {
     modal.style.pointerEvents = modal.classList.contains("active") ? "auto" : "none";
   };
+
   updatePointer();
+
   new MutationObserver(updatePointer).observe(modal, {
     attributes: true,
     attributeFilter: ["class"]
   });
 });
+
+document.querySelectorAll(".menu-item").forEach((item) => {
+  item.addEventListener("click", () => switchPage(item.dataset.page));
+});
+
+const mobileStart = document.getElementById("startWelcomeBtn");
+if (mobileStart) {
+  mobileStart.addEventListener("click", () => switchPage("dashboard"));
+}
+
+const mobileQuickCards = document.querySelectorAll(".quick-card");
+mobileQuickCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const action = card.dataset.action;
+    if (action === "start") switchPage("dashboard");
+    if (action === "templates") switchPage("templates");
+    if (action === "history") switchPage("history");
+  });
+});
+
+const hiddenFileInput = document.getElementById("contractFile");
+const uploadBoxMobile = document.querySelector(".upload-box");
+if (hiddenFileInput && uploadBoxMobile) {
+  uploadBoxMobile.addEventListener("click", () => hiddenFileInput.click());
+}
