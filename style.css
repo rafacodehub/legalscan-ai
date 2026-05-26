@@ -1019,7 +1019,6 @@ body.theme-emerald-law {
   }
 }
 
-/* Additional responsive + theme + login styles */
 :root{
   --accent:#8b5cf6;
   --accent2:#5b21b6;
@@ -1156,7 +1155,6 @@ th[data-history-sort]:hover,th[data-report-sort]:hover{
   }
 }
 
-/* V6 refinements */
 .brand-logo{display:none!important}
 .brand-text-only{justify-content:flex-start;min-height:62px}
 .brand-text-only h1{display:flex;gap:8px;align-items:baseline;white-space:nowrap;font-size:31px}
@@ -1238,7 +1236,6 @@ body.theme-amber-exec{
   .top-actions,.page-actions{grid-template-columns:1fr!important;display:grid!important}
 }
 
-/* V7 clean layout, welcome page, empty analysis, premium loading */
 html {
   zoom: .88;
 }
@@ -1503,7 +1500,6 @@ body {
   }
 }
 
-/* V8 final polish: footer alignment, premium animations, mobile app style */
 html, body {
   min-height: 100%;
 }
@@ -1694,7 +1690,6 @@ html, body {
   background: var(--accent);
 }
 
-/* Mobile app style */
 .mobile-fab {
   display: none;
 }
@@ -1784,8 +1779,6 @@ html, body {
   }
 }
 
-
-/* V9 fixes */
 .app-footer {
   justify-content: center !important;
   text-align: center !important;
@@ -1833,11 +1826,6 @@ html, body {
   }
 }
 
-
-/* =========================
-V11 PREMIUM EXPERIENCE
-========================= */
-
 .page {
   opacity: 0;
   transform: translateY(18px) scale(.985);
@@ -1855,8 +1843,6 @@ V11 PREMIUM EXPERIENCE
   transform: translateY(0) scale(1);
   filter: blur(0);
 }
-
-/* animated background */
 
 body::before {
   content: "";
@@ -1893,8 +1879,6 @@ body::after {
   }
 }
 
-/* subtle neon lines */
-
 .neon-line {
   position: fixed;
   height: 1px;
@@ -1918,8 +1902,6 @@ body::after {
   0%,100% { opacity: .15; }
   50% { opacity: .4; }
 }
-
-/* premium toasts */
 
 .toast {
   position: fixed;
@@ -1958,8 +1940,6 @@ body::after {
   color: #cbd5e1;
 }
 
-/* hover glow */
-
 .panel:hover,
 .result-card:hover,
 .quick-card:hover,
@@ -1968,8 +1948,6 @@ body::after {
     0 0 0 1px rgba(139,92,246,.18),
     0 24px 80px rgba(139,92,246,.16);
 }
-
-/* mobile premium */
 
 @media(max-width: 900px) {
 
@@ -2032,8 +2010,6 @@ body::after {
   }
 }
 
-/* ================= MOBILE RESPONSIVE FIX V12 ================= */
-
 html {
   zoom: 1 !important;
 }
@@ -2044,7 +2020,6 @@ body {
   overflow-x: hidden !important;
 }
 
-/* Compact toast: no fullscreen notifications */
 .toast {
   position: fixed !important;
   right: 14px !important;
@@ -2073,7 +2048,6 @@ body {
   opacity: 1 !important;
 }
 
-/* Hidden modals must not block taps */
 .modal:not(.active),
 .loading-overlay:not(.active) {
   display: none !important;
@@ -2266,7 +2240,6 @@ input {
     width: 100% !important;
   }
 
-  /* Bottom app navigation */
   .menu {
     position: fixed !important;
     left: 8px !important;

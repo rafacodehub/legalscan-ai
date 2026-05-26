@@ -678,7 +678,6 @@ renderHistory();
 renderReports();
 resetAnalysis();
 
-// auth + themes + sorting enhancements
 let loggedIn = true;
 const body = document.body;
 
@@ -766,7 +765,6 @@ document.getElementById("clearReportsBtn").addEventListener("click",()=>{
   showToast("Histórico de relatórios limpo.");
 });
 
-/* V6: plan selector, immersive theme persistence, login state refinement */
 const planModal = document.getElementById("planModal");
 const closePlanModal = document.getElementById("closePlanModal");
 const upgradeBoxBtn = document.getElementById("upgradeBoxBtn");
@@ -836,7 +834,6 @@ if(originalSubmitLoginBtn){
 }
 if(localStorage.getItem("legalscan-logged")==="false") setLoggedOutUI();
 
-/* V7 welcome, clean empty state, loading steps, risk badges, premium PDF */
 const welcomePage = document.getElementById("welcomePage");
 const startWelcomeBtn = document.getElementById("startWelcomeBtn");
 const quickCards = document.querySelectorAll(".quick-card");
@@ -888,7 +885,6 @@ quickCards.forEach((card) => {
   });
 });
 
-/* Patch menu behavior for welcome page */
 const originalSwitchPageV7 = switchPage;
 switchPage = function(page) {
   document.querySelectorAll(".page").forEach((section) => section.classList.remove("active"));
@@ -907,7 +903,6 @@ switchPage = function(page) {
   if (page === "reports") renderReports();
 };
 
-/* Override analysis button to use staged loading */
 elements.analyzeBtn.replaceWith(elements.analyzeBtn.cloneNode(true));
 elements.analyzeBtn = document.getElementById("analyzeBtn");
 
@@ -938,14 +933,12 @@ elements.analyzeBtn.addEventListener("click", async () => {
   });
 });
 
-/* Empty state returns on reset */
 const originalResetAnalysisV7 = resetAnalysis;
 resetAnalysis = function() {
   originalResetAnalysisV7();
   if (reportArea) reportArea.classList.add("is-empty");
 };
 
-/* Risk badges in upload history */
 const originalRenderHistoryV7 = renderHistory;
 renderHistory = function() {
   const history = JSON.parse(localStorage.getItem("legalscan-history") || "[]");
@@ -969,7 +962,6 @@ renderHistory = function() {
   }).join("");
 };
 
-/* Premium PDF override with cover + details page */
 function generatePremiumPDFV7() {
   if (!state.lastAnalysis) {
     showToast("Realize uma análise antes de baixar o relatório.");
@@ -994,7 +986,6 @@ function generatePremiumPDFV7() {
     pdf.text(`Página ${page}`, 182, 286);
   }
 
-  // Cover
   darkPage();
   pdf.setFillColor(15, 23, 42);
   pdf.roundedRect(14, 18, 182, 238, 8, 8, "F");
@@ -1021,7 +1012,6 @@ function generatePremiumPDFV7() {
   pdf.text(`Gerado em: ${today.toLocaleDateString("pt-BR")} ${today.toLocaleTimeString("pt-BR")}`, 26, 100);
   pdf.text(`Usuário: ${USER}`, 26, 108);
 
-  // Score visual
   pdf.setFillColor(30, 41, 59);
   pdf.circle(105, 150, 34, "F");
   pdf.setTextColor(255,255,255);
@@ -1045,7 +1035,6 @@ function generatePremiumPDFV7() {
 
   footer(1);
 
-  // Details page
   pdf.addPage();
   darkPage();
 
@@ -1122,14 +1111,12 @@ if (generateReportFromPageV7) {
   document.getElementById("generateReportFromPage").addEventListener("click", generatePremiumPDFV7);
 }
 
-/* Initialize in welcome page */
 document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
 document.getElementById("welcomePage").classList.add("active");
 document.querySelectorAll(".menu-item").forEach((m) => m.classList.remove("active"));
 document.querySelector('.menu-item[data-page="dashboard"]').classList.add("active");
 if (reportArea) reportArea.classList.add("is-empty");
 
-/* V8: onboarding, advanced fake intelligence, cinematic progress, animated score */
 const onboardingModal = document.getElementById("onboardingModal");
 const onboardingSlides = document.querySelectorAll(".onboarding-slide");
 const onboardingDots = document.getElementById("onboardingDots");
@@ -1190,13 +1177,11 @@ if (localStorage.getItem("legalscan-onboarding") === "done") {
   renderOnboarding();
 }
 
-/* Mobile FAB */
 const mobileFab = document.getElementById("mobileFab");
 if (mobileFab) {
   mobileFab.addEventListener("click", () => switchPage("dashboard"));
 }
 
-/* Enhance fake intelligence */
 const originalAnalyzeTextV8 = analyzeText;
 analyzeText = function(text) {
   const analysis = originalAnalyzeTextV8(text);
@@ -1225,7 +1210,6 @@ analyzeText = function(text) {
   return analysis;
 };
 
-/* Animated score */
 function animateScoreTo(value) {
   const el = elements.riskScore;
   const start = 0;
@@ -1250,7 +1234,6 @@ renderAnalysis = function(analysis) {
   animateScoreTo(analysis.score);
 };
 
-/* Cinematic progress labels in Portuguese */
 function showLoadingSteps(callback) {
   analysisLoading.classList.add("active");
   loadingSteps.forEach((step) => step.classList.remove("active", "done"));
@@ -1281,7 +1264,6 @@ function showLoadingSteps(callback) {
   }, 520);
 }
 
-/* PDF detected clauses list + watermark + seal */
 const originalGeneratePremiumPDFV8 = generatePremiumPDFV7;
 generatePremiumPDFV7 = function() {
   if (!state.lastAnalysis) {
@@ -1328,7 +1310,6 @@ generatePremiumPDFV7 = function() {
     pdf.text(String(value), x + 6, y + 22);
   }
 
-  // Cover
   darkPage();
 
   pdf.setFillColor(15, 23, 42);
@@ -1385,7 +1366,6 @@ generatePremiumPDFV7 = function() {
 
   footer(1);
 
-  // Details page
   pdf.addPage();
   darkPage();
 
@@ -1472,8 +1452,6 @@ if (reportPageButtonV8) {
   document.getElementById("generateReportFromPage").addEventListener("click", generatePremiumPDFV7);
 }
 
-
-/* V10 fixes: loading in Portuguese, onboarding always on load, plan sync in account settings */
 const accountPlanText = document.getElementById("accountPlanText");
 
 function syncPlanEverywhere(plan) {
@@ -1497,7 +1475,6 @@ document.querySelectorAll(".plan-option").forEach((option) => {
 
 syncPlanEverywhere(localStorage.getItem("legalscan-plan") || "Plano Gratuito");
 
-/* Onboarding must always appear whenever index.html opens */
 window.addEventListener("load", () => {
   const onboarding = document.getElementById("onboardingModal");
   if (onboarding) {
@@ -1507,14 +1484,12 @@ window.addEventListener("load", () => {
   }
 });
 
-/* Do not permanently suppress onboarding in this version */
 function closeOnboarding() {
   onboardingModal.classList.remove("active");
   setLoggedInUI();
   showToast("Conta Rafacodehub ativada.");
 }
 
-/* Loading stages in Portuguese */
 function showLoadingSteps(callback) {
   analysisLoading.classList.add("active");
   loadingSteps.forEach((step) => step.classList.remove("active", "done"));
@@ -1552,15 +1527,6 @@ function showLoadingSteps(callback) {
   }, 520);
 }
 
-
-/* =========================
-V11 PREMIUM UX
-========================= */
-
-
-
-/* transition between pages */
-
 const originalSwitchPage = switchPage;
 
 switchPage = function(pageId) {
@@ -1582,8 +1548,6 @@ switchPage = function(pageId) {
   }, 120);
 };
 
-
-/* MOBILE FIX V12: compact toast and clickable mobile */
 window.showToast = function(message, subtitle = "") {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -1599,7 +1563,6 @@ window.showToast = function(message, subtitle = "") {
   }, 2200);
 };
 
-/* Ensure hidden modals never block mobile clicks */
 document.querySelectorAll(".modal").forEach((modal) => {
   const updatePointer = () => {
     modal.style.pointerEvents = modal.classList.contains("active") ? "auto" : "none";
